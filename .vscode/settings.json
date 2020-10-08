@@ -1,5 +1,20 @@
 {
+  "git.ignoreLimitWarning": true,
   "emmet.includeLanguages": {
-     "javascript": "javascriptreact"
-  }
+      "javascript": "javascriptreact"
+   },
+  "eslint.alwaysShowStatus": true,
+  "editor.formatOnSave": false,
+  "[javascript]": {
+     "editor.formatOnSave": false
+   },
+  "prettier.disableLanguages": [
+      "js", "jsx"
+  ],
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+  
+  ]
 }
