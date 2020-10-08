@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Like from './common/Like';
 import {getMovies} from '../services/fakeMovieService';
-import Pagination from './common/Pagination'
+import Pagination from './common/Pagination';
+import { paginate } from '../utils/paginate';
 
 class Table extends Component {
   state = {
@@ -25,8 +26,9 @@ handlePageChange = (page) => {
 }
   render() {
     const {length: count} = this.state.movies;
-    const { currentPage, pageSize } = this.state;
+    const { currentPage, pageSize, movies: allMovies } = this.state;
     if (count === 0) {return<p>There are no movies to show</p>}
+    const movies = paginate(allMovies, currentPage, pageSize)
     return (
       <>
         <p>There are {count} movies displayed</p>
@@ -42,13 +44,16 @@ handlePageChange = (page) => {
             </tr>
           </thead>
           <tbody>
-            { this.state.movies.map(movie => 
+            { movies.map(movie => 
               <tr key={movie._id}>
                 <td> {movie.title} </td>
                 <td> {movie.genre.name}</td>
                 <td> {movie.numberInStock}</td>
                 <td>{movie.dailyRentalRate}</td>
-                <td><Like liked={movie.liked} onClick={() => this.handleLike(movie)}/></td>
+                <td><Like 
+                  liked={movie.liked} 
+                  onClick={() => this.handleLike(movie)}
+                  /></td>
                 <td> <button onClick={() => this.handleDelete(movie)} className="btn btn-danger btn-sm"> Delete </button> </td>
               </tr>
             )}
